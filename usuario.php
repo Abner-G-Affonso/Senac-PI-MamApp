@@ -17,9 +17,9 @@ $usuario = [
 ];
 
 // Se o usuário estiver logado
-if (isset($_SESSION['usuario_id'])) {
-    $stmt = $conn->prepare("SELECT * FROM usuario WHERE id_usuario = ?");
-    $stmt->execute([$_SESSION['usuario_id']]);
+if (isset($_SESSION['id_usuario'])) {
+    $stmt = $conn->prepare("SELECT * FROM usuario WHERE id_usuario");
+    $stmt->execute([$_SESSION['id_usuario']]);
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $endereco = $_POST["endereco"];
     $senha = password_hash($_POST["senha"], PASSWORD_DEFAULT);
 
-    if (isset($_SESSION['usuario_id'])) {
+    if (isset($_SESSION['id_usuario'])) {
         // Atualiza dados do usuário logado
         $sql = "UPDATE usuario SET nome=?, rg=?, cpf=?, data_nascimento=?, telefone=?, email=?, endereco=?, senha=? WHERE id_usuario=?";
         $stmt = $conn->prepare($sql);
